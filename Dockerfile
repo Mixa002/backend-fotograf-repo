@@ -1,14 +1,15 @@
+# Koristi Java 21 i instaliraj maven
 FROM eclipse-temurin:21-jdk-jammy
 
-# Kopiraj ceo sadrzaj foldera (ukljucujuci .mvn)
+# Instaliraj maven (ovo će nam omogućiti da koristimo 'mvn' komandu direktno)
+RUN apt-get update && apt-get install -y maven
+
+# Kopiraj fajlove
 COPY . /app
 WORKDIR /app
 
-# Daj dozvolu za izvrsavanje wrapper-a (bitno za Linux)
-RUN chmod +x ./mvnw
-
-# Builduj projekat
-RUN ./mvnw clean install -DskipTests
+# Builduj projekat koristeći 'mvn' umesto './mvnw'
+RUN mvn clean install -DskipTests
 
 # Pokreni aplikaciju
 CMD ["java", "-jar", "target/backendFotograf-0.0.1-SNAPSHOT.jar"]
