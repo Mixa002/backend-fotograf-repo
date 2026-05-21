@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/albums")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
+//@CrossOrigin(origins = "http://localhost:5173")
 public class AlbumController {
 
     private final AlbumService albumService;
@@ -35,7 +35,7 @@ public class AlbumController {
         return ResponseEntity.ok(albumService.getPrivateAlbumsForClient(username));
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     public ResponseEntity<AlbumDTO> getAlbumById(@PathVariable Long id){
         System.out.println("--- KONTROLER: TRAŽI SE ALBUM SA ID-jem: " + id + " ---");

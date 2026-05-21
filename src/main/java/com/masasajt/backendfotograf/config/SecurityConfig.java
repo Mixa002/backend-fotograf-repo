@@ -42,10 +42,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
 
                         // Otvorena ruta za sve javne albume
+                        // U securityFilterChain:
                         .requestMatchers(HttpMethod.GET, "/api/albums/public").permitAll()
-
-                        // DODAJ OVU LINIJU: Dozvoli svima da povuku podatke o pojedinačnom albumu preko ID-ja
-                        .requestMatchers(HttpMethod.GET, "/api/albums/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/albums/{id}").permitAll() // Ovo je ok, ali ispod je bitnije
 
                         // Sve ostale rute (my-albums, kreiranje, brisanje, dodavanje slika) zahtevaju validan JWT
                         .anyRequest().authenticated()
