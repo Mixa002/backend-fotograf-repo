@@ -24,6 +24,7 @@ public class AlbumController {
 
     @GetMapping("/public")
     public ResponseEntity<List<AlbumDTO>> getPublicAlbums(){
+        System.out.println("HIT ENDPOINT");
         return ResponseEntity.ok(albumService.getPublicAlbums());
     }
 
