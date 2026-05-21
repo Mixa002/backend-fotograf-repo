@@ -38,21 +38,21 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        // Otvoreno za login i registraciju
+                        // 1. DOZVOLI OPTIONS ZA SVE (ovo rešava većinu 403 CORS problema)
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                        // 2. Otvoreno za login i registraciju
                         .requestMatchers("/api/auth/**").permitAll()
 
-                        // Otvorena ruta za sve javne albume
-                        // U securityFilterChain:
+                        // 3. Otvorene get rute
                         .requestMatchers(HttpMethod.GET, "/api/albums/public").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/albums/{id}").permitAll() // Ovo je ok, ali ispod je bitnije
+                        .requestMatchers(HttpMethod.GET, "/api/albums/{id}").permitAll()
 
-                        // Sve ostale rute (my-albums, kreiranje, brisanje, dodavanje slika) zahtevaju validan JWT
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                // <-- 2. KLJUČNA STVAR: Kazemo Springu da izvrsi nas filter PRE glavnog UsernamePassword filtra
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
