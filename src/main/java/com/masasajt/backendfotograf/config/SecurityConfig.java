@@ -66,7 +66,10 @@ public class SecurityConfig {
         if(allowedOrigin == null || allowedOrigin.isEmpty()){
             allowedOrigin = "http://localhost:5173";
         }
-        configuration.setAllowedOrigins(List.of(allowedOrigin,"http://localhost:5173", "http://localhost:3000"));
+        configuration.setAllowedOrigins(List.of("https://*.vercel.app",
+                "https://*.vercel.live",
+                "http://localhost:5173",
+                "http://localhost:3000"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Cache-Control"));
         configuration.setAllowCredentials(true);
