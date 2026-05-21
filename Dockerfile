@@ -1,9 +1,11 @@
-# Koristi Java 21 kao osnovu
 FROM eclipse-temurin:21-jdk-jammy
 
-# Kopiraj fajlove
+# Kopiraj ceo sadrzaj foldera (ukljucujuci .mvn)
 COPY . /app
 WORKDIR /app
+
+# Daj dozvolu za izvrsavanje wrapper-a (bitno za Linux)
+RUN chmod +x ./mvnw
 
 # Builduj projekat
 RUN ./mvnw clean install -DskipTests
