@@ -45,7 +45,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
 
                         // 3. Otvorene get rute
-                        .requestMatchers(HttpMethod.GET, "/api/albums/public").permitAll()
+                        .requestMatchers("/api/albums/public").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/albums/{id}").permitAll()
 
                         .anyRequest().authenticated()
@@ -69,6 +69,7 @@ public class SecurityConfig {
         configuration.setAllowedOriginPatterns(List.of(
                 "https://*.vercel.app",
                 "https://*.vercel.live",
+                "https://masa-fotografija.vercel.app",
                 "http://localhost:5173",
                 "http://localhost:3000"
         ));
